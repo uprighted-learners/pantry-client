@@ -20,7 +20,7 @@ function Header() {
             <h2 id="italic">"No locks. No judgement. Just help."</h2>
           </div>
         <div id="nav">
-             <ul class="nav-ul">
+             <ul className="nav-ul">
                    <li><Link to="/" className="nav-link">Find a Pantry</Link></li>
                    <li><Link to="/getinvolved" className="nav-link">Get Involved</Link></li>
                    <li><Link to="/about" className="nav-link">About</Link></li>

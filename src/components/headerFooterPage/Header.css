@@ -145,3 +145,12 @@ a:hover {
     right: 0;
     padding: 0.25em 0.5em;
 }
+
+#logoPhoto{
+    height: 100%;
+    width: 70%;
+    float: right;
+    position: relative;
+    overflow: hidden;
+    padding-right: .3em;
+}
