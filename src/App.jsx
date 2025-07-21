@@ -7,7 +7,7 @@ import GetInvolved from './components/getInvolvedPage/GetInvolved'
 import Home from './components/homePage/Home'
 import RsrcList from './components/resourcesPage/RsrcList'
 import SearchBar from './components/homePage/SearchBar'
-import AdminDash from './components/AdminDash'
+import AdminDash from './components/adminPage/AdminDash'
 import ProtectedRoute from './components/ProtectedRoute'
 
 

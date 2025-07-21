@@ -10,6 +10,11 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!query) {
+      alert("Please enter a zip code");
+      return;
+    }
+    console.log("Searching for a zip code:", query);
     if (onSearch) {
       onSearch(query);
     }
@@ -21,7 +26,7 @@ const SearchBar = ({ onSearch }) => {
         type="text"
         value={query}
         onChange={handleInputChange}
-        placeholder="Search for panty by zip code"
+        placeholder="Search for panty by zip code (enter zipcode here)"
         style={styles.input}
       />
       <button type="submit" style={styles.button}>SEARCH</button>

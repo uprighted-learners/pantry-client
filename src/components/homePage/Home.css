@@ -35,15 +35,17 @@ body {
     padding: 20px;
 }
 
-.locationList{
-    border: 2px 1px solid var(--gold);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 100%;
-    width: 25%;
-    overflow: auto;
-    align-items: center;
+.locationList {
+  border: 2px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 700px; 
+  width: 25%;
+  overflow-y: auto; 
+  align-items: center;
+  padding: 1rem;
+  position: relative;
 }
 
 .mapSection {
@@ -74,12 +76,31 @@ body {
   .locationCard {
     background-color: hsla(41, 100%, 57%, .7);
     width: 84%;
+<<<<<<< HEAD
     padding: 1px;
+=======
+    height: 195px;
+    padding: 5px;
+>>>>>>> 548c1b317a67383900c6c1a10deb749a3db343e4
     border-radius: 25px;
     text-align: center;
     color: #141A13;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     padding-left: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 3px solid #805A83;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem;
+
+  }
+
+  .locationCard.popped {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    position: relative;
   }
 
   .popContainer {
@@ -149,7 +170,7 @@ body {
   .search-bar button {
     padding: 8px 16px;
     background-color: var(--purple);
-    color: white;
+    color: rgb(232, 220, 220);
     border: none;
     border-radius: 5px;
     cursor: pointer;

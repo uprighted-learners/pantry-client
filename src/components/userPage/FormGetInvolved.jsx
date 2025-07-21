@@ -1,7 +1,7 @@
 // !This will go inside the user dashboard
 
 import { useState } from 'react';
-import { submitGetInvolved } from '../services/getInvolvedSvc';
+import { submitGetInvolved } from '../../services/getInvolvedSvc';
 import './FormGetInvolved.css';
 import { 
     Container, 
@@ -152,13 +152,52 @@ export default function FormGetInvolved() {
                     {errors.typeOfInquiry && <FormHelperText>{errors.typeOfInquiry}</FormHelperText>}
                 </FormControl>
 
-                <TextField label="Full Name" name="fullName" fullWidth value={form.fullName} onChange={handleChange} error={!!errors.fullName} helperText={errors.fullName} sx={{ mb: 2 }} />
+                <TextField 
+                    label="Full Name" 
+                    name="fullName" 
+                    fullWidth 
+                    value={form.fullName} 
+                    onChange={handleChange} 
+                    error={!!errors.fullName} 
+                    helperText={errors.fullName} 
+                    sx={{ mb: 2 }} 
+                />
 
-                <TextField label="Email" name="email" fullWidth value={form.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} sx={{ mb: 2 }} />
+                <TextField l
+                    abel="Email" 
+                    name="email" 
+                    fullWidth 
+                    value={form.email} 
+                    onChange={handleChange} 
+                    error={!!errors.email}
+                    helperText={errors.email} 
+                    sx={{ mb: 2 }} 
+                />
 
-                <TextField label="Phone Number" name="phoneNumber" fullWidth value={form.phoneNumber} onChange={handleChange} inputProps={{ pattern: "\\d{10}" }} error={!!errors.phoneNumber} helperText={errors.phoneNumber} sx={{ mb: 2 }} />
+                <TextField 
+                    label="Phone Number" 
+                    name="phoneNumber" 
+                    fullWidth 
+                    value={form.phoneNumber} 
+                    onChange={handleChange} 
+                    inputProps={{ pattern: "\\d{10}" }} 
+                    error={!!errors.phoneNumber} 
+                    helperText={errors.phoneNumber} 
+                    sx={{ mb: 2 }} 
+                />
 
-                <TextField label="Message" name="message" multiline rows={5} fullWidth value={form.message} onChange={handleChange} error={!!errors.message} helperText={errors.message} sx={{ mb: 2 }} />
+                <TextField 
+                    label="Message" 
+                    name="message" 
+                    multiline 
+                    rows={5} 
+                    fullWidth 
+                    value={form.message} 
+                    onChange={handleChange} 
+                    error={!!errors.message} 
+                    helperText={errors.message} 
+                    sx={{ mb: 2 }} 
+                />
 
                 <Button variant="contained" type="submit">Send</Button>
             </form>
