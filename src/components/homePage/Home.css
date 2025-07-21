@@ -76,12 +76,8 @@ body {
   .locationCard {
     background-color: hsla(41, 100%, 57%, .7);
     width: 84%;
-<<<<<<< HEAD
-    padding: 1px;
-=======
     height: 195px;
     padding: 5px;
->>>>>>> 548c1b317a67383900c6c1a10deb749a3db343e4
     border-radius: 25px;
     text-align: center;
     color: #141A13;
