@@ -9,9 +9,9 @@ function PantryCard({ pantry, onClick, isSelected }) {
       id={pantry._id} // Use the pantry ID as the element ID for scrolling
     >
       <h3>{pantry.pantryName}</h3>
-      <p>{pantry.address}, {pantry.city}, {pantry.state} {pantry.zipCode}</p>
+      {/* <p>{pantry.address}, {pantry.city}, {pantry.state} {pantry.zipCode}</p>
       {pantry.hours && (<p><strong>Hours:</strong> {pantry.hours}</p>)}
-      {pantry.contact && (<p><strong>Contact:</strong> {pantry.contact}</p>)}
+      {pantry.contact && (<p><strong>Contact:</strong> {pantry.contact}</p>)} */}
     </div>
   );
 }

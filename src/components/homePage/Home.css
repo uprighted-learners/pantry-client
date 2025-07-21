@@ -75,13 +75,8 @@ body {
 
   .locationCard {
     background-color: hsla(41, 100%, 57%, .7);
-    width: 84%;
-<<<<<<< HEAD
-    padding: 1px;
-=======
-    height: 195px;
-    padding: 5px;
->>>>>>> 548c1b317a67383900c6c1a10deb749a3db343e4
+    width: 74%;
+    padding: .5em;
     border-radius: 25px;
     text-align: center;
     color: #141A13;
@@ -90,9 +85,8 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     border: 3px solid #805A83;
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem;
+    border-radius: 2em;
+    margin: .1em;
 
   }
 
@@ -101,6 +95,14 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     z-index: 10;
     position: relative;
+  }
+
+    .locationCard.selected {
+      background-color: var(--purple);
+      color: white;
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
   }
 
   .popContainer {
@@ -184,8 +186,8 @@ body {
 #moreInfo {
   text-align: center;
   width: 100%;
-  padding-top: .6em;
-  font-size: 1.4em;
+  font-size: 1.3em;
+  margin: .6em;
 }
 
 #bankTitle {

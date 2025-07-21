@@ -15,17 +15,37 @@ function Home() {
   }, []);
 
   const handlePantryClick = (pantry) => {
-    setSelectedPantry(pantry._id); // Update the selected pantry when a card is clicked
+    setSelectedPantry(pantry); // Update the selected pantry when a card is clicked
   };
 
   const handleMarkerClick = (pantry) => {
-    setSelectedPantry(pantry._id); // Update the selected pantry when a map marker is clicked
+    setSelectedPantry(pantry); // Update the selected pantry when a map marker is clicked
     // Scroll the pantry card into view
     const element = document.getElementById(pantry._id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+
+  
+  const popUp = () => {
+    if(!selectedPantry)
+      return null;
+
+    return(
+      <div className="popContainer">
+        <div className="popFilling">
+          <h2>{selectedPantry.pantryName}</h2>
+           <p><strong>Address:</strong> {selectedPantry.address}, {selectedPantry.city}, {selectedPantry.state}, {selectedPantry.zipCode}</p>
+          <p><strong>Hours:</strong> {selectedPantry.hours}</p>
+          <p><strong>Requirements:</strong> {Array.isArray(selectedPantry.requirements) ? selectedPantry.requirements.join(', ') : ''}</p>
+          <p><strong>Contact:</strong> {selectedPantry.contact}</p>
+          <button onClick={() => setSelectedPantry(null)}>Close</button>
+        </div>
+      </div>
+    )
+   }
+
 
   return (
     <div className="container">
@@ -37,7 +57,7 @@ function Home() {
               key={pantry._id}
               pantry={pantry}
               onClick={() => handlePantryClick(pantry)} // Clicking on card will update the selected pantry
-              isSelected={pantry._id === selectedPantry} // Highlight selected pantry card
+              isSelected={selectedPantry && pantry._id === selectedPantry._id} // Highlight selected pantry card
             />
           ))}
         </div>
@@ -48,7 +68,7 @@ function Home() {
             onMarkerClick={handleMarkerClick} 
           />
         </div>
-      </div>
+      </div>{popUp()}
     </div>
   );
 }
