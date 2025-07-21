@@ -1,114 +1,172 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+// import React, { useRef, useEffect, useState } from 'react';
+// import mapboxgl from 'mapbox-gl';
+// import 'mapbox-gl/dist/mapbox-gl.css';
+// import './Home.css'
+
+// mapboxgl.accessToken = 'pk.eyJ1IjoiY2FubmVkZG9jcmV3IiwiYSI6ImNtZDNwemMwYTA3Nngya29paGpkZGd1cTQifQ.zqgZy0q8PJVH9rA7VdSDog';
+
+// const Map = () => {
+//   const mapContainerRef = useRef(null);
+//   const [lng, setLng] = useState(-84.3733);
+//   const [lat, setLat] = useState(33.7550);
+//   const [zoom, setZoom] = useState(10);
+
+//   const locations = [
+//     { lng: -84.3537, lat: 33.7743 },
+//     { lng: -84.3287, lat: 33.8186 },
+//     { lng: -84.49421, lat: 33.66182 },
+//     { lng: -84.45113182883547, lat: 33.778164832266384 },
+//     { lng: -84.4247, lat: 33.8002 },
+
+//   ];
+
+//   useEffect(() => {
+//     const map = new mapboxgl.Map({
+//       container: mapContainerRef.current,
+//       style: 'mapbox://styles/mapbox/streets-v11',
+//       center: [lng, lat],
+//       zoom: zoom,
+//     });
+
+//     map.on('move', () => {
+//       setLng(map.getCenter().lng.toFixed(4));
+//       setLat(map.getCenter().lat.toFixed(4));
+//       setZoom(map.getZoom().toFixed(2));
+//     });
+
+//     locations.forEach(location => {
+//       new mapboxgl.Marker()
+//         .setLngLat([location.lng, location.lat])
+//         .addTo(map);
+//     });
+
+
+//     return () => map.remove();
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
+
+//   return (
+//     <div>
+//       <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '2em', paddingRight: '2em' }}>
+//       <div className="sidebar" style={{ padding: '0.5rem' }}>
+//         <h2 id="bankTitle">Find a Pantry</h2>
+//         <p id="longlat">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</p>
+//       </div>
+//       <div
+//         ref={mapContainerRef}
+//         style={{ width: '100%', minHeight: '600px', flexGrow: 1 }}
+//       />
+//     </div>
+//     </div>
+//   );
+// };
+
+// export default Map;
+
+
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import './Home.css';
-import SearchBar from './SearchBar';
+import './Home.css'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FubmVkZG9jcmV3IiwiYSI6ImNtZDNwemMwYTA3Nngya29paGpkZGd1cTQifQ.zqgZy0q8PJVH9rA7VdSDog';
 
-const Map = ({ selectedPantry, onMarkerClick }) => {
-  const mapContainerRef = useRef(null);
-  const mapRef = useRef(null);
+const Map = ({ pantries, setSelectedPantry }) => {
+  const mapContainerRef = useRef(null);  //DOM container ref
+  const mapRef = useRef(null); //Map isntance ref
 
   const [lng, setLng] = useState(-84.3733);
   const [lat, setLat] = useState(33.7550);
   const [zoom, setZoom] = useState(10);
-  const [locations, setLocations] = useState([]);
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  // const locations = [
+  //   { lng: -84.3537, lat: 33.7743 },
+  //   { lng: -84.3287, lat: 33.8186 },
+  //   { lng: -84.49421, lat: 33.66182 },
+  //   { lng: -84.45113182883547, lat: 33.778164832266384 },
+  //   { lng: -84.4247, lat: 33.8002 },
+
+  // ];
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/pantries')
-      .then((res) => res.json())
-      .then((data) => {
-        const mappedLocations = data.map(pantry => ({
-          lng: pantry.lng,
-          lat: pantry.lat,
-          _id: pantry._id,
-        }));
-        setLocations(mappedLocations);
-      })
-      .catch((err) => console.error('Error loading pantry locations:', err));
-  }, []);
+  if (mapRef.current || !mapContainerRef.current) return;  // initialize only once
 
-  useEffect(() => {
-    mapRef.current = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
       zoom: zoom,
     });
 
-    mapRef.current.on('move', () => {
-      setLng(mapRef.current.getCenter().lng.toFixed(4));
-      setLat(mapRef.current.getCenter().lat.toFixed(4));
-      setZoom(mapRef.current.getZoom().toFixed(2));
+       mapRef.current = map;
+       console.log('Map initiialized:', map);
+
+       map.on('load', () => {
+        map.resize();
+        setMapLoaded(true);
+       });
+
+    map.on('move', () => {
+      setLng(map.getCenter().lng.toFixed(4));
+      setLat(map.getCenter().lat.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
     });
 
-    return () => mapRef.current.remove();
-  }, []); // stops the repeating
+    return () => map.remove();
+  }, []);
 
   useEffect(() => {
-    if (!mapRef.current || locations.length === 0) return;
+    if (mapRef.current) {
+    mapRef.current.resize();
+  }
+  });
 
-    locations.forEach((location) => {
-      const markerColor = location._id === selectedPantry ? 'purple' : 'gold';
-      const marker = new mapboxgl.Marker({
-        color: markerColor,
-      })
-        .setLngLat([location.lng, location.lat])
+  useEffect(() => {
+    if (!mapRef.current || !mapLoaded || !pantries.length) return;
+
+    let markers = [];
+
+    console.log("Pantries passed to Map:", pantries);
+
+    pantries.forEach((pantry) => {
+       console.log("Pantry coords:", pantry.lat, pantry.lng);
+
+    if (pantry.lng && pantry.lat) {
+      const lng = parseFloat(pantry.lng);
+      const lat = parseFloat(pantry.lat);
+
+      if (!isNaN(lng) && !isNaN(lat)) {
+      const marker = new mapboxgl.Marker()
+        .setLngLat([lng, lat])
         .addTo(mapRef.current);
 
-      marker.getElement().addEventListener('click', () => {
-        // Update the selected pantry when marker is clicked
-        onMarkerClick(location);
-        // Center the map on the clicked marker
-        mapRef.current.flyTo({ center: [location.lng, location.lat], zoom: 14 });
-      });
-    });
-  }, [locations, selectedPantry, onMarkerClick]); // Re-run when locations or selectedPantry change
+        marker.getElement().addEventListener('click', () => {
+          setSelectedPantry(pantry);
+        });
 
-  // Function to search for the pantry by zip code
-  const findClosestPantry = async (zipCode) => {
-    if (!zipCode) return;
-
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipCode}.json?access_token=${mapboxgl.accessToken}`;
-
-    try {
-      const response = await fetch(geocodeUrl);
-      const data = await response.json();
-      if (data.features.length > 0) {
-        const { center } = data.features[0];
-        const [newLng, newLat] = center;
-
-        // Center map and add a marker at the new coordinates
-        mapRef.current.flyTo({ center: [newLng, newLat], zoom: 12 });
-
-        new mapboxgl.Marker({
-          color: 'red',
-        })
-          .setLngLat([newLng, newLat])
-          .addTo(mapRef.current);
-      } else {
-        console.error('No location found for the given zip code');
+        markers.push(marker);
       }
-    } catch (error) {
-      console.error('Error fetching geocode:', error);
     }
-  };
+    });
+
+    return () => {
+      markers.forEach(marker => marker.remove());
+    };
+  }, [pantries, mapLoaded, setSelectedPantry]);
+
 
   return (
-    <div>
-      <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '2em', paddingRight: '2em' }}>
-        <div className="sidebar" style={{ padding: '0.5rem' }}>
-          <h2 id="bankTitle">Find a Pantry</h2>
-        </div>
-        <SearchBar onSearch={findClosestPantry} /> {/* Search bar added */}
-        <div
-          ref={mapContainerRef}
-          style={{ width: '90%', minHeight: '500px', flexGrow: 1 }}
-        />
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%'}}>
+      <div className="sidebar" style={{ padding: '0.5rem' }}>
+        <h2 id="bankTitle">Find a Pantry</h2>
         <p id="longlat">Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</p>
       </div>
+      <div
+        ref={mapContainerRef}
+        className="mapContainer"
+        style={{ width: '100%', minHeight: '600px', flexGrow: 1, border: '2px solid red' }}
+      ></div>
     </div>
   );
 };
