@@ -14,7 +14,7 @@ export const PantryCreate = () => (
             <TextInput source="requirements" />
             <TextInput source="contact" />
             <TextInput source="lat" /> 
-            <TextInput source="long" /> 
+            <TextInput source="lng" /> 
         </SimpleForm>
     </Create>
 );

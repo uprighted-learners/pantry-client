@@ -9,6 +9,7 @@ import RsrcList from './components/resourcesPage/RsrcList'
 import SearchBar from './components/homePage/SearchBar'
 import AdminDash from './components/adminPage/AdminDash'
 import ProtectedRoute from './components/ProtectedRoute'
+import UserDash from './components/userPage/UserDash'
 
 
 
@@ -23,6 +24,7 @@ function App() {
                 <Route element={<ProtectedRoute isAdminRequired={true} />}>
                   <Route path="/admin/*" element={<AdminDash />} />                    
                 </Route>
+                <Route path="/user-dashboard" element={<UserDash />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/resources" element={<RsrcList />} />
               </Routes>

@@ -98,7 +98,7 @@ export default function LoginRegForm() {
                 navigate('/admin'); 
             } else {
                 console.log("Logged in as non-admin user.");
-                // navigate('/user-dashboard'); // Example: if you had a separate user dashboard
+                navigate('/user-dashboard'); 
             }
 
             setForm({
